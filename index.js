@@ -1,6 +1,9 @@
 
 const puppeteer =require('puppeteer')
+const fs=require('fs/promises')
 
+//---------------------for taking screenshot---------------------------
+/*
 const webScrapping= async()=>{
  const browser=await puppeteer.launch({headless:'new'})
  const page=await browser.newPage()
@@ -10,6 +13,28 @@ const webScrapping= async()=>{
 
  await browser.close()
 }
+*/
+
+//------------------for listing out all the product name-------------------
+const webScrapping=async()=>{
+    const browser=await puppeteer.launch({headless:'new'})
+    const page=await browser.newPage()
+    await page.goto('https://book-store-furation-tech-assignment.vercel.app/booklisting')
+
+    await new Promise((r)=>setTimeout(r,5000))
+
+    const list=await page.evaluate(()=>{
+        return Array.from(document.querySelectorAll(".chakra-heading.css-479vt2")).map((el)=>el.textContent)
+    })
+    // console.log(list)
+    await fs.writeFile("list.txt",list.join("\n"))
+
+    await browser.close()
+
+}
+
+
+
 
 webScrapping()
 
