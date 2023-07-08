@@ -21,12 +21,11 @@ const webScrapping=async()=>{
     const page=await browser.newPage()
     await page.goto('https://book-store-furation-tech-assignment.vercel.app/booklisting')
 
-    await new Promise((r)=>setTimeout(r,5000))
+    await new Promise((r)=>setTimeout(r,4000))
 
     const list=await page.evaluate(()=>{
         return Array.from(document.querySelectorAll(".chakra-heading.css-479vt2")).map((el)=>el.textContent)
     })
-    // console.log(list)
     await fs.writeFile("list.txt",list.join("\n"))
 
     await browser.close()
