@@ -1,6 +1,5 @@
-
-const puppeteer =require('puppeteer')
-const fs=require('fs/promises')
+const puppeteer = require("puppeteer");
+const fs = require("fs/promises");
 
 //---------------------for taking screenshot---------------------------
 /*
@@ -19,23 +18,11 @@ const webScrapping= async()=>{
 const webScrapping=async()=>{
     const browser=await puppeteer.launch({headless:'new'})
     const page=await browser.newPage()
-    await page.goto('https://book-store-furation-tech-assignment.vercel.app/booklisting')
-
-    await new Promise((r)=>setTimeout(r,4000))
-
-    const list=await page.evaluate(()=>{
-        return Array.from(document.querySelectorAll(".chakra-heading.css-479vt2")).map((el)=>el.textContent)
-    })
-    await fs.writeFile("list.txt",list.join("\n"))
+    await page.goto('https://pptr.dev/api/puppeteer.page.screenshot')
+    const sideList=await page.evaluate(()=>Array.from(document.querySelectorAll('.menu__link')).map((el)=>el.textContent))
+    fs.writeFile('list.txt',sideList.join("\n"))
 
     await browser.close()
-
 }
 
-
-
-
-webScrapping()
-
-
-
+webScrapping();
